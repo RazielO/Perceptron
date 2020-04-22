@@ -25,7 +25,7 @@ imprimirPaso paso i
 
             printf formatoInicial (show $ fst paso)
             mapM_ (\x -> printf formatoCentral (show x)) pesos
-            printf formatoFinal (show $ (snd $ snd paso) !! 0)
+            printf formatoFinal (show $ (snd $ snd paso) !! i)
 
             imprimirPaso paso (i + 1)
     | otherwise = putStrLn $ " " ++ (concat $ replicate ((length $ (fst $ snd paso) !! 0) + 2) $ concat $ replicate (header + 3) "-")
