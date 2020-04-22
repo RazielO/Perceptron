@@ -2,6 +2,7 @@ module Main where
 
 import Activacion
 import Pesos
+import Aleatorio
 
 convergencia esperado real = esperado == real
 
@@ -14,11 +15,11 @@ entrenamiento theta alpha pesos tabla = do
         else entrenamiento theta alpha (map (\i -> nuevosPesos (fst $ tabla !! i) (pesos !! i) alpha (snd $ tabla !! i) (salidas !! i)) [0..(length tabla - 1)]) tabla
 
 main = do
-    let theta = 0.2
-    let alpha = 0.2
-
     let tabla = [([0,0,0],0), ([0,0,1], 1), ([0,1,0], 1), ([0,1,1], 1), ([1,0,0], 1), ([1,0,1], 1), ([1,1,0], 1), ([1,1,1], 1)]
-    let pesos = [[0.2 :: Float, 0.2 :: Float, 0.2 :: Float] | x <- [1..8]]
+
+    theta <- numeroR
+    pesos <- generarPesos (length tabla) (length $ fst $ tabla !! 0)
+    let alpha = 0.1
 
     print $ entrenamiento theta alpha pesos tabla
 
