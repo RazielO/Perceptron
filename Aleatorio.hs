@@ -1,9 +1,8 @@
 import System.Random 
-
+import Control.Monad (replicateM)
 numeroR =  do
-    
-    return $ fst $ randomR(0.5::Float,-0.5::Float) newStdGen
+    newStdGen
+    g <- getStdGen
+    return $ fst $ randomR(0.5::Float,-0.5::Float) g
 
-pesos lista cantidad
-    | length lista == cantidad = lista
-    | otherwise = pesos (lista ++ [numeroR]) cantidad
+aleatorios can = replicateM can numeroR
