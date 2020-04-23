@@ -5,6 +5,8 @@ import Pesos
 import Aleatorio
 import Salida
 
+import Data.List.Split
+
 convergencia :: [Int] -> [Int] -> Bool
 convergencia esperado real = esperado == real
 
@@ -20,8 +22,9 @@ entrenamiento theta alpha pesos tabla epoch proceso = do
         else entrenamiento theta alpha nuevos tabla (epoch + 1) (proceso ++ paso)
 
 main = do
-    let tabla = [([0,0,0],0), ([0,0,1], 1), ([0,1,0], 1), ([0,1,1], 1), ([1,0,0], 1), ([1,0,1], 1), ([1,1,0], 1), ([1,1,1], 1)]
+--    let tabla = [([0,0,0],0), ([0,0,1], 1), ([0,1,0], 1), ([0,1,1], 1), ([1,0,0], 1), ([1,0,1], 1), ([1,1,0], 1), ([1,1,1], 1)]
 
+    tabla <- leerTabla
     theta <- numeroR
     pesos <- generarPesos (length tabla) (length $ fst $ tabla !! 0)
     let alpha = 0.2
@@ -30,3 +33,8 @@ main = do
     imprimirHeaders (length (fst $ tabla !! 0))
     mapM_ (\x -> imprimirPaso x 0) proceso
 
+leerTabla = do
+    cont <- readFile "tabla.txt"
+    let aux = filter (\x -> length x /= 0) $ splitOn "\n" cont
+    let a = map (\x -> read x :: ([Int], Int)) aux
+    return $ a
